@@ -101,8 +101,8 @@ CONFIG_RTW_SDIO_PM_KEEP_POWER = y
 ###################### MP HW TX MODE FOR VHT #######################
 CONFIG_MP_VHT_HW_TX_MODE = y
 ###################### Platform Related #######################
-CONFIG_PLATFORM_I386_PC = y
-CONFIG_PLATFORM_ARM_RPI = n
+CONFIG_PLATFORM_I386_PC = n
+CONFIG_PLATFORM_ARM_RPI = y
 CONFIG_PLATFORM_ARM64_RPI = n
 CONFIG_PLATFORM_ANDROID_X86 = n
 CONFIG_PLATFORM_ANDROID_INTEL_X86 = n
@@ -1173,10 +1173,10 @@ ifeq ($(CONFIG_MP_VHT_HW_TX_MODE), y)
 EXTRA_CFLAGS += -DCONFIG_MP_VHT_HW_TX_MODE
 ifeq ($(CONFIG_PLATFORM_I386_PC), y)
 ## For I386 X86 ToolChain use Hardware FLOATING
-EXTRA_CFLAGS += -mhard-float
+#EXTRA_CFLAGS += -mhard-float
 else
 ## For ARM ToolChain use Hardware FLOATING
-EXTRA_CFLAGS += -mfloat-abi=hard
+#EXTRA_CFLAGS += -mfloat-abi=hard
 endif
 endif
 
@@ -1185,6 +1185,7 @@ endif
 ifeq ($(CONFIG_PLATFORM_ARM_RPI), y)
 EXTRA_CFLAGS += -DCONFIG_LITTLE_ENDIAN
 EXTRA_CFLAGS += -DCONFIG_IOCTL_CFG80211 -DRTW_USE_CFG80211_STA_EVENT
+EXTRA_CFLAGS += -Wno-error=date-time
 ARCH ?= arm
 CROSS_COMPILE ?=
 KVER ?= $(shell uname -r)
